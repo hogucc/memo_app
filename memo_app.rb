@@ -12,10 +12,8 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  @title = params[:title]
-  @body = params[:body]
   memos = Memo.find
-  @memos = memos.create(@title, @body)
+  @memos = memos.create(params[:title], params[:body])
   redirect '/'
 end
 
@@ -34,18 +32,14 @@ get '/memos/:id/edit' do
 end
 
 patch '/memos/:id' do
-  @id  = params[:id].to_i
-  @title = params[:title]
-	@body = params[:body]
 	memos = Memo.find
-  memos.update(@id, @title, @body)
+  memos.update(params[:id].to_i, params[:title], params[:body])
   redirect '/'
 end
 
 delete '/memos/:id' do
-  @id  = params[:id].to_i
   memos = Memo.find
-  memos.delete(@id)
+  memos.delete(params[:id].to_i)
   redirect '/'
 end
 

@@ -1,0 +1,15 @@
+.memo-title {
+  margin-bottom: 8px
+}
+
+.memo-body {
+  margin-bottom: 12px
+}
+
+.button-section {
+  display: flex;
+}
+
+.button-default {
+  margin: 20px 40px 0 0;
+}

@@ -2,6 +2,7 @@
 
 require "sinatra"
 require "yaml/store"
+require "pg"
 
 get "/" do
   memos = Memo.find
@@ -46,17 +47,33 @@ delete "/memos/:id" do
 end
 
 class Memo
-  def initialize(store)
-    @store = store
+  def initialize(connection)
+    @connection = connection
+  end
+
+  def close_connection
+    @connection.finish
   end
 
   def self.find
-    store = YAML::Store.new "memos.yml"
-    Memo.new(store)
+    db_info = YAML.load(File.read("./config/database.yml"))["development"]
+    connection = PG.connect(host: db_info["development"], user: db_info["username"], password: db_info["password"], dbname: db_info["database"])
+    Memo.new(connection)
   end
 
   def index
-    @store.transaction { @store["memo"] }
+    titles = []
+    begin
+      @connection.exec("SELECT title FROM Memo") do |result|
+        result.each do |row|
+          titles << row
+        end
+      end
+    ensure
+      @connection.finish
+    end
+
+    titles
   end
 
   def create(title, body)

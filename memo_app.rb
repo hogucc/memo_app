@@ -82,9 +82,9 @@ class Memo
   end
 
   def create(title, body)
-    @store.transaction do
-      @store["memo"] += [{ title: title, body: body }]
-    end
+    @connection.exec("INSERT INTO Memo (title, body) VALUES ($1, $2)", [title, body])
+  ensure
+    @connection.finish
   end
 
   def show(id)

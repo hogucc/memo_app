@@ -3,6 +3,7 @@
 require "sinatra"
 require "yaml/store"
 require "pg"
+require "dotenv/load"
 
 get "/" do
   memos = Memo.find
@@ -56,8 +57,12 @@ class Memo
   end
 
   def self.find
-    db_info = YAML.load(File.read("./config/database.yml"))["development"]
-    connection = PG.connect(host: db_info["development"], user: db_info["username"], password: db_info["password"], dbname: db_info["database"])
+    connection = PG.connect(
+      host: ENV["DB_HOST"],
+      user: ENV["DB_USER"],
+      password: ENV["DB_PASSWORD"],
+      dbname: ENV["DB_NAME"]
+    )
     Memo.new(connection)
   end
 

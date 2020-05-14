@@ -107,8 +107,8 @@ class Memo
   end
 
   def delete(id)
-    @store.transaction do
-      @store["memo"].delete_at(id)
-    end
+    @connection.exec("DELETE FROM Memo where id = $1", [id])
+  ensure
+    @connection.finish
   end
 end

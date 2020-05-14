@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "sinatra"
-require "yaml/store"
 require "pg"
 require "dotenv/load"
 
@@ -50,10 +49,6 @@ end
 class Memo
   def initialize(connection)
     @connection = connection
-  end
-
-  def close_connection
-    @connection.finish
   end
 
   def self.find

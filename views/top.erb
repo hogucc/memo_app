@@ -7,8 +7,8 @@
   <div class="container">
     <div class="content">
       <ul>
-        <% @memos.each_with_index do |memo, id| %>
-          <li><a href="/memos/<%= id %>"><%= memo["title"] %></a></li>
+        <% @memos.each do |memo| %>
+          <li><a href="/memos/<%= memo["id"] %>"><%= memo["title"] %></a></li>
         <% end %>
       </ul>
     <div>

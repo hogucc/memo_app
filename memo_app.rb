@@ -67,18 +67,18 @@ class Memo
   end
 
   def index
-    titles = []
+    memos = []
     begin
-      @connection.exec("SELECT title FROM Memo") do |result|
+      @connection.exec("SELECT id, title FROM Memo") do |result|
         result.each do |row|
-          titles << row
+          memos << row
         end
       end
     ensure
       @connection.finish
     end
 
-    titles
+    memos
   end
 
   def create(title, body)

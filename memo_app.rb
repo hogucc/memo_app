@@ -101,9 +101,9 @@ class Memo
   end
 
   def update(id, title, body)
-    @store.transaction do
-      @store["memo"][id] = { title: title, body: body }
-    end
+    @connection.exec("UPDATE Memo set title = $1, body = $2 where id = $3", [title, body, id])
+  ensure
+    @connection.finish
   end
 
   def delete(id)

@@ -69,7 +69,7 @@ class Memo
   def index
     memos = []
     begin
-      @connection.exec("SELECT id, title FROM Memo") do |result|
+      @connection.exec("SELECT id, title FROM Memo ORDER BY id") do |result|
         result.each do |row|
           memos << row
         end

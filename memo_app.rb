@@ -88,7 +88,16 @@ class Memo
   end
 
   def show(id)
-    @store.transaction { @store["memo"][id] }
+    memo = {}
+    begin
+      @connection.exec("SELECT title, body FROM Memo where id = $1", [id]) do |result|
+        memo.merge!(result.first)
+      end
+    ensure
+      @connection.finish
+    end
+
+    memo
   end
 
   def update(id, title, body)

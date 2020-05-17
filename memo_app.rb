@@ -62,14 +62,11 @@ class Memo
   end
 
   def index
-    memos = []
     begin
-      memos = @connection.exec("SELECT id, title FROM Memo ORDER BY id")
+      @connection.exec("SELECT id, title FROM Memo ORDER BY id")
     ensure
       @connection.finish
     end
-
-    memos
   end
 
   def create(title, body)

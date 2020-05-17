@@ -16,7 +16,7 @@ end
 
 post "/memos" do
   memos = Memo.find
-  @memos = memos.create(params[:title], params[:body])
+  memos.create(params[:title], params[:body])
   redirect "/"
 end
 

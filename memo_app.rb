@@ -62,27 +62,22 @@ class Memo
   end
 
   def index
-    begin
-      @connection.exec("SELECT id, title FROM Memo ORDER BY id")
-    ensure
-      @connection.finish
-    end
+    result = @connection.exec("SELECT id, title FROM Memo ORDER BY id")
+    @connection.finish
+
+    result
   end
 
   def create(title, body)
     @connection.exec("INSERT INTO Memo (title, body) VALUES ($1, $2)", [title, body])
-  ensure
     @connection.finish
   end
 
   def show(id)
     memo = {}
-    begin
-      @connection.exec("SELECT title, body FROM Memo where id = $1", [id]) do |result|
-        memo.merge!(result.first)
-      end
-    ensure
-      @connection.finish
+
+    @connection.exec("SELECT title, body FROM Memo where id = $1", [id]) do |result|
+      memo.merge!(result.first)
     end
 
     memo
@@ -90,13 +85,11 @@ class Memo
 
   def update(id, title, body)
     @connection.exec("UPDATE Memo set title = $1, body = $2 where id = $3", [title, body, id])
-  ensure
     @connection.finish
   end
 
   def delete(id)
     @connection.exec("DELETE FROM Memo where id = $1", [id])
-  ensure
     @connection.finish
   end
 end

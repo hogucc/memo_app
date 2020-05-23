@@ -2,9 +2,9 @@
   <form action="/memos/<%= @id %>" method="POST">
     <div class="container">
       <p>タイトル</p>
-      <input class="input is-primary memo-title" type="text" placeholder="タイトル" name="title" value=<%= @memo[:title] %>>
+      <input class="input is-primary memo-title" type="text" placeholder="タイトル" name="title" value=<%= @memo["title"] %>>
       <p>メモ</p>
-      <textarea class="textarea is-primary memo-body" placeholder="メモ" rows="10" name="body"><%= @memo[:body] %></textarea>
+      <textarea class="textarea is-primary memo-body" placeholder="メモ" rows="10" name="body"><%= @memo["body"] %></textarea>
     </div>
     <div class="container">
       <input type="hidden" name="_method" value="patch">

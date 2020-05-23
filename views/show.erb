@@ -1,7 +1,7 @@
 <section class="section">
   <div class="container">
-    <p class= "memo-title"><%= @memo[:title]%></p>
-    <p class="memo-body"><%= @memo[:body]%></p>
+    <p class= "memo-title"><%= @memo["title"]%></p>
+    <p class="memo-body"><%= @memo["body"]%></p>
     <div class="button-section">
       <a href="/memos/<%= @id %>/edit" class="button is-primary button-default">変更</a>
       <form action="/memos/<%= @id %>" method="POST">
